@@ -43,15 +43,6 @@ jobs:
        with:
          images: ghcr.io/${{ github.repository }}
 
-     - run: |
-         echo '=========================='
-         echo "${{secrets.ADDRESS}}"
-         echo '=========================='
-         echo "${{secrets.STUDENT_KEY}}"
-         echo '=========================='
-         echo "${{secrets.PASSPHRASE}}"
-         echo '=========================='
-
      - name: executing remote ssh commands using ssh key
        uses: appleboy/ssh-action@v1.2.1
        with:
