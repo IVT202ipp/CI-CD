@@ -17,6 +17,7 @@ jobs:
      - run: pytest
 
  build:
+   needs: testing
    runs-on: ubuntu-latest
 
 
@@ -43,6 +44,18 @@ jobs:
        with:
          images: ghcr.io/${{ github.repository }}
 
+     - name: Build and push Docker image
+       uses: docker/build-push-action@v5
+       with:
+         context: .
+         push: true
+         tags: ${{ steps.meta.outputs.tags }}
+         labels: ${{ steps.meta.outputs.labels }}
+
+ deployment:
+   needs: build
+   runs-on: ubuntu-latest
+   steps:
      - name: executing remote ssh commands using ssh key
        uses: appleboy/ssh-action@v1.2.1
        with:
@@ -52,11 +65,3 @@ jobs:
          key: ${{ secrets.STUDENT_KEY }}
          passphrase: ${{ secrets.PASSPHRASE }}
          script: whoami
-
-     - name: Build and push Docker image
-       uses: docker/build-push-action@v5
-       with:
-         context: .
-         push: true
-         tags: ${{ steps.meta.outputs.tags }}
-         labels: ${{ steps.meta.outputs.labels }}
