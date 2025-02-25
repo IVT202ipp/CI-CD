@@ -49,7 +49,7 @@ jobs:
        with:
          host: ${{ secrets.ADDRESS }}
          key: ${{ secrets.STUDENT_KEY }}
-         passphrase: 123
+         passphrase: ${{ secrets.PASSPHRASE }}
          script: whoami
 
      - name: Build and push Docker image
