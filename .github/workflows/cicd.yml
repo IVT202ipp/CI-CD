@@ -64,4 +64,8 @@ jobs:
          host: ${{ secrets.ADDRESS }}
          key: ${{ secrets.STUDENT_KEY }}
          passphrase: ${{ secrets.PASSPHRASE }}
-         script: whoami
+         script: |
+          cd $HOME/test_cicd
+          docker compose down
+          docker pull ghcr.io/ivt202ipp/ci-cd:main
+          docker compose up -d
